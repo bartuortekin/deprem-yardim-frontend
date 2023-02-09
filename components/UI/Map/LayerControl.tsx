@@ -3,8 +3,9 @@ import { HeatmapLayerFactory } from "@vgrid/react-leaflet-heatmap-layer";
 import React, { useCallback } from "react";
 import { LayersControl } from "react-leaflet";
 import ClusterGroup from "./ClusterGroup";
-
+import { GeoJSON } from "react-leaflet";
 const HeatmapLayer = React.memo(HeatmapLayerFactory<Point>());
+import faultLines from "./fault_lines.json";
 
 export type Point = [number, number, number];
 
@@ -32,6 +33,13 @@ const LayerControl = ({ points, data }: Props) => {
       </LayersControl.Overlay>
       <LayersControl.Overlay checked name="Noktalar">
         <ClusterGroup data={data} />
+      </LayersControl.Overlay>
+      <LayersControl.Overlay checked name="Fay hatları">
+        <GeoJSON
+          style={{ color: "tomato", weight: 3, opacity: 1 }}
+          attribution="&copy; https://github.com/fraxen/tectonicplates/blob/master/GeoJSON/PB2002_plates.json"
+          data={faultLines as any}
+        />
       </LayersControl.Overlay>
     </LayersControl>
   );
